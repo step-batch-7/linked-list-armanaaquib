@@ -81,6 +81,21 @@ Status add_to_start(List_ptr list, int value)
   }
 
   list->count++;
-  
+
+  return Success;
+}
+
+Status remove_from_start(List_ptr list)
+{
+  if(list->head == NULL)
+  {
+    return Failure;
+  }
+
+  Node_ptr node_to_destroy = list->head;
+  list->head = node_to_destroy->next;
+
+  free(node_to_destroy);
+
   return Success;
 }
