@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "list.h"
 
 List_ptr create_list(void)
@@ -10,6 +11,19 @@ List_ptr create_list(void)
   list->count = 0;
 
   return list;
+}
+
+void display(List_ptr list)
+{
+  Node_ptr p_walk = list->head;
+
+  while(p_walk != NULL)
+  {
+    printf("%d ", p_walk->value);
+    p_walk = p_walk->next;
+  }
+
+  printf("\n");
 }
 
 Node_ptr create_node(int value)
