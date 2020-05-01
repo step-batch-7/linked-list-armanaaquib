@@ -26,6 +26,26 @@ void display(List_ptr list)
   printf("\n");
 }
 
+Status clear_list(List_ptr list)
+{
+  Node_ptr p_walk = list->head;
+  Node_ptr node_to_remove;
+
+  while(p_walk != NULL)
+  {
+    node_to_remove = p_walk;
+    p_walk = p_walk->next;
+    
+    free(node_to_remove);
+  }
+
+  list->head = NULL;
+  list->last = NULL;
+  list->count = 0;
+
+  return Success;
+}
+
 Node_ptr create_node(int value)
 {
   Node_ptr node = (Node_ptr )malloc(sizeof(Node));
