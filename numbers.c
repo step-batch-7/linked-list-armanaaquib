@@ -4,8 +4,9 @@
 typedef enum
 {
   Add_To_End='a',
-  Exit='m',
-  Display_List='l'
+  Add_To_Start='b',
+  Display_List='l',
+  Exit='m'
 } Option;
 
 void display_options(void);
@@ -24,6 +25,7 @@ void display_options(void)
   printf("\nMain Menu\n");
   printf("---------\n");
   printf("(a) add a number to the end of the list\n");
+  printf("(b) add a number to the start of the list\n");
   printf("(l) display the list of numbers\n");
   printf("(m) exit\n");
 }
@@ -62,6 +64,11 @@ Status perform_operaton(List_ptr list, Option option)
     case Add_To_End:
       value = ask_value();
       status = add_to_end(list, value);
+      break;
+
+    case Add_To_Start:
+      value = ask_value();
+      status = add_to_start(list, value);
       break;
       
     case Display_List:
