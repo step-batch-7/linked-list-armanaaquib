@@ -129,5 +129,7 @@ int main(void)
     option = ask_option();
   }
 
+  destroy_list(list);
+
   return 0;
 }

@@ -46,6 +46,14 @@ Status clear_list(List_ptr list)
   return Success;
 }
 
+void destroy_list(List_ptr list)
+{
+  if(clear_list(list))
+  {
+    free(list);
+  }
+}
+
 Node_ptr create_node(int value)
 {
   Node_ptr node = (Node_ptr )malloc(sizeof(Node));
