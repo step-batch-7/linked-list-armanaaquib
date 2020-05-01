@@ -6,6 +6,7 @@ typedef enum
   Add_To_End='a',
   Add_To_Start='b',
   Remove_From_Start='e',
+  Remove_From_End='f',
   Display_List='l',
   Exit='m'
 } Option;
@@ -37,7 +38,7 @@ Status perform_operaton(List_ptr list, Option option)
 {
   int value;
   Status status = Failure;
-
+  
   switch (option)
   {
     case Add_To_End:
@@ -54,6 +55,10 @@ Status perform_operaton(List_ptr list, Option option)
       status = remove_from_start(list);
       break;
       
+    case Remove_From_End:
+      status = remove_from_end(list);
+      break;
+
     case Display_List:
       display(list);
       status = Success;
@@ -73,6 +78,7 @@ void display_options(void)
   printf("(a) add a number to the end of the list\n");
   printf("(b) add a number to the start of the list\n");
   printf("(e) remove a number from the beginning of the list\n");
+  printf("(f) remove a number from the end of the list\n");
   printf("(l) display the list of numbers\n");
   printf("(m) exit\n");
 }

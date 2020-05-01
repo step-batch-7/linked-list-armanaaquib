@@ -41,23 +41,23 @@ Node_ptr create_node(int value)
 
 Status add_to_end(List_ptr list, int value)
 {
-  Node_ptr new_node = create_node(value);
+  Node_ptr node = create_node(value);
 
-  if(!new_node)
+  if(!node)
   {
     return Failure;
   }
 
   if(list->head == NULL)
   {
-    list->head = new_node;
+    list->head = node;
   }
   else
   {
-    list->last->next = new_node;
+    list->last->next = node;
   }
   
-  list->last = new_node;
+  list->last = node;
   list->count++;
 
   return Success;
@@ -74,13 +74,12 @@ Status add_to_start(List_ptr list, int value)
 
   node->next = list->head;
   list->head = node;
+  list->count++;
 
   if(list->last == NULL)
   {
     list->last = node;
   }
-
-  list->count++;
 
   return Success;
 }
@@ -92,10 +91,47 @@ Status remove_from_start(List_ptr list)
     return Failure;
   }
 
-  Node_ptr node_to_destroy = list->head;
-  list->head = node_to_destroy->next;
+  Node_ptr node_to_remove = list->head;
+  list->head = node_to_remove->next;
+  list->count--;
 
-  free(node_to_destroy);
+  free(node_to_remove);
+
+  if(list->head == NULL)
+  {
+    list->last = NULL;
+  }
+
+  return Success;
+}
+
+Status remove_from_end(List_ptr list) 
+{
+  if(list->last == NULL)
+  {
+    return Failure;
+  }
+  
+  free(list->last);
+  list->count--;
+
+  Node_ptr second_last_node = list->head;
+
+  if(second_last_node == list->last)
+  {
+    list->head = NULL;
+    list->last = NULL;
+
+    return Success;
+  }
+
+  while(second_last_node->next != list->last)
+  {
+    second_last_node = second_last_node->next;
+  }
+
+  second_last_node->next = NULL;
+  list->last = second_last_node;
 
   return Success;
 }

@@ -17,14 +17,15 @@ typedef Node *Node_ptr;
 
 typedef struct
 {
-  Node *head;
-  Node *last;
+  Node_ptr head;
+  Node_ptr last;
   int count;
 } List;
 
 typedef List *List_ptr;
 
 List_ptr create_list(void);
+Node_ptr create_node(int value);
 
 Status add_to_end(List_ptr, int value);
 Status add_to_start(List_ptr, int value);
