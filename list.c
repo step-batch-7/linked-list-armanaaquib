@@ -112,6 +112,46 @@ Status add_to_start(List_ptr list, int value)
   return Success;
 }
 
+Status insert_at(List_ptr list, int value, unsigned position)
+{
+  if(position > list->count)
+  {
+    return Failure;
+  }
+
+  if(position == 0)
+  {
+    return add_to_start(list, value);
+  }
+
+  if(position == list->count)
+  {
+    return add_to_end(list, value);
+  }
+
+  Node_ptr node = create_node(value);
+
+  if(!node)
+  {
+    return Failure;
+  }
+
+  Node_ptr p_walk = list->head;
+  unsigned pos = 0;
+
+  while(pos < position - 1)
+  {
+    p_walk = p_walk->next;
+    pos++;
+  }  
+
+  node->next = p_walk->next;
+  p_walk->next = node;
+  list->count++;
+
+  return Success;
+}
+
 Status remove_from_start(List_ptr list)
 {
   if(list->head == NULL)

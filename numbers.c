@@ -5,6 +5,7 @@ typedef enum
 {
   Add_To_End='a',
   Add_To_Start='b',
+  Insert_At='c',
   Remove_From_Start='e',
   Remove_From_End='f',
   Clear_List='j',
@@ -13,6 +14,7 @@ typedef enum
 } Option;
 
 void clear_input_buffer(void);
+unsigned ask_position(void);
 int ask_value(void);
 Status perform_operaton(List_ptr, Option);
 void display_options(void);
@@ -21,6 +23,18 @@ Option ask_option(void);
 void clear_input_buffer(void)
 {
   while(getchar() != '\n');
+}
+
+unsigned ask_position(void)
+{
+  int position;
+
+  printf("Please enter position\n");
+  scanf("%d", &position);
+
+  clear_input_buffer();
+
+  return position;
 }
 
 int ask_value(void)
@@ -38,6 +52,7 @@ int ask_value(void)
 Status perform_operaton(List_ptr list, Option option)
 {
   int value;
+  unsigned position;
   Status status = Failure;
 
   switch (option)
@@ -50,6 +65,12 @@ Status perform_operaton(List_ptr list, Option option)
     case Add_To_Start:
       value = ask_value();
       status = add_to_start(list, value);
+      break;
+
+    case Insert_At:
+      value = ask_value();
+      position = ask_position();
+      status = insert_at(list, value, position);
       break;
 
     case Remove_From_Start:
@@ -82,6 +103,7 @@ void display_options(void)
   printf("---------\n");
   printf("(a) add a number to the end of the list\n");
   printf("(b) add a number to the start of the list\n");
+  printf("(c) insert a number at a given position in the list\n");
   printf("(e) remove a number from the beginning of the list\n");
   printf("(f) remove a number from the end of the list\n");
   printf("(j) clear the whole list\n");
