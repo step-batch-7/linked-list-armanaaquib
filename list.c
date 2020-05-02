@@ -118,16 +118,6 @@ Status insert_at(List_ptr list, int value, unsigned position)
     return Failure;
   }
 
-  if(position == 0)
-  {
-    return add_to_start(list, value);
-  }
-
-  if(position == list->count)
-  {
-    return add_to_end(list, value);
-  }
-
   Node_ptr node = create_node(value);
 
   if(!node)
@@ -135,17 +125,30 @@ Status insert_at(List_ptr list, int value, unsigned position)
     return Failure;
   }
 
-  Node_ptr p_walk = list->head;
+  Prev_Current_Pair pair;
+  pair.current = list->head;
+  pair.prev = NULL;
+
   unsigned pos = 0;
 
-  while(pos < position - 1)
+  while(pos < position)
   {
-    p_walk = p_walk->next;
+    pair.prev = pair.current;
+    pair.current = pair.current->next;
     pos++;
-  }  
+  }
 
-  node->next = p_walk->next;
-  p_walk->next = node;
+  if(pair.prev == NULL)
+  {
+    list->head = node;
+    list->last = node;
+  }
+  else
+  {
+    pair.prev->next = node;  
+  }
+
+  node->next = pair.current;
   list->count++;
 
   return Success;

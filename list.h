@@ -18,6 +18,11 @@ typedef struct node
 typedef Node *Node_ptr;
 typedef Node_ptr *Ptr_to_node_ptr;
 
+typedef struct {
+  Node_ptr prev;
+  Node_ptr current;
+} Prev_Current_Pair;
+
 typedef struct
 {
   Node_ptr head;
