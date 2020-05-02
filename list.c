@@ -266,3 +266,32 @@ Status remove_first_occurrence(List_ptr list, int value)
 
   return remove_at(list, position);
 }
+
+Status remove_all_occurrences(List_ptr list, int value)
+{
+  int position = find_position(list, value);
+
+  if(position == -1)
+  {
+    return Failure;
+  }
+
+  Node_ptr p_walk = list->head;
+  position = 0;
+
+  while(p_walk != NULL)
+  {
+    if(p_walk->value == value)
+    {
+      p_walk = p_walk->next;
+      remove_at(list, position);
+    }
+    else
+    {
+      p_walk = p_walk->next;
+      position++;
+    }
+  }
+  
+  return Success;
+}
