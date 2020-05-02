@@ -6,6 +6,7 @@ typedef enum
   Add_To_End='a',
   Add_To_Start='b',
   Insert_At='c',
+  Add_Unique='d',
   Remove_From_Start='e',
   Remove_From_End='f',
   Remove_At='g',
@@ -90,6 +91,11 @@ Status perform_operaton(List_ptr list, Option option)
       status = insert_at(list, value, position);
       break;
 
+    case Add_Unique:
+      value = ask_value();
+      status = add_unique(list, value);
+      break;
+
     case Remove_From_Start:
       status = remove_from_start(list);
       break;
@@ -143,6 +149,7 @@ void display_options(void)
   printf("(a) add a number to the end of the list\n");
   printf("(b) add a number to the start of the list\n");
   printf("(c) insert a number at a given position in the list\n");
+  printf("(d) add a unique item on the list at the end(if it alreay exists, do not insert)\n");
   printf("(e) remove a number from the beginning of the list\n");
   printf("(f) remove a number from the end of the list\n");
   printf("(g) remove a number from a given position in the list\n");

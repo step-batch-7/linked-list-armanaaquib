@@ -295,3 +295,20 @@ Status remove_all_occurrences(List_ptr list, int value)
   
   return Success;
 }
+
+Status add_unique(List_ptr list, int value)
+{
+  if(find_position(list, value) != -1)
+  {
+    return Success;
+  }
+
+  Node_ptr node = create_node(value);
+
+  if(!node)
+  {
+    return Failure;
+  }
+
+  return add_to_end(list, value);
+}
