@@ -8,6 +8,7 @@ typedef enum
   Insert_At='c',
   Remove_From_Start='e',
   Remove_From_End='f',
+  Remove_At='g',
   Clear_List='j',
   Display_List='l',
   Exit='m'
@@ -81,6 +82,11 @@ Status perform_operaton(List_ptr list, Option option)
       status = remove_from_end(list);
       break;
 
+    case Remove_At:
+      position = ask_position();
+      status = remove_at(list, position);
+      break;
+
     case Clear_List:
       status = clear_list(list);
       break;
@@ -106,6 +112,7 @@ void display_options(void)
   printf("(c) insert a number at a given position in the list\n");
   printf("(e) remove a number from the beginning of the list\n");
   printf("(f) remove a number from the end of the list\n");
+  printf("(g) remove a number from a given position in the list\n");
   printf("(j) clear the whole list\n");
   printf("(l) display the list of numbers\n");
   printf("(m) exit\n");
