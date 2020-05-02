@@ -25,6 +25,7 @@ Status perform_operaton(List_ptr, Option);
 void display_options(void);
 Option ask_option(void);
 void display_search_result(int, int);
+void display_operation_status(Status);
 
 void display_search_result(int value, int position)
 {
@@ -35,6 +36,18 @@ void display_search_result(int value, int position)
   else
   {
       printf("%d is not present in the list\n", value);
+  }
+}
+
+void display_operation_status(Status status)
+{
+  if(status == Success)
+  {
+    printf("Operation successfull.\n");
+  }
+  else
+  {
+    printf("Operation Fail.\n");
   }
 }
 
@@ -187,15 +200,7 @@ int main(void)
     Status status = Failure;
 
     status = perform_operaton(list, option);
-
-    if(status == Success)
-    {
-      printf("Operation successfull.\n");
-    }
-    else
-    {
-      printf("Operation Fail.\n");
-    }
+    display_operation_status(status);
     
     display_options();
     option = ask_option();
