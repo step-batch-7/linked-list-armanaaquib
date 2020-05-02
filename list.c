@@ -254,3 +254,15 @@ int find_position(List_ptr list, int value)
 
   return -1;
 }
+
+Status remove_first_occurrence(List_ptr list, int value)
+{
+  int position = find_position(list, value);
+
+  if(position == -1)
+  {
+    return Failure;
+  }
+
+  return remove_at(list, position);
+}

@@ -9,6 +9,7 @@ typedef enum
   Remove_From_Start='e',
   Remove_From_End='f',
   Remove_At='g',
+  Remove_First_Occurrence='h',
   Clear_List='j',
   Find_Position='k',
   Display_List='l',
@@ -101,6 +102,11 @@ Status perform_operaton(List_ptr list, Option option)
       status = remove_at(list, position);
       break;
 
+    case Remove_First_Occurrence:
+      value = ask_value();
+      status = remove_first_occurrence(list, value);
+      break;
+
     case Find_Position:
       value = ask_value();
       position = find_position(list, value);
@@ -134,6 +140,7 @@ void display_options(void)
   printf("(e) remove a number from the beginning of the list\n");
   printf("(f) remove a number from the end of the list\n");
   printf("(g) remove a number from a given position in the list\n");
+  printf("(h) remove first occurrence of a number\n");
   printf("(j) clear the whole list\n");
   printf("(k) check if a number exists in the list\n");
   printf("(l) display the list of numbers\n");
