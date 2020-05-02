@@ -235,3 +235,22 @@ Status remove_at(List_ptr list, unsigned position)
 
   return Success;
 }
+
+int find_position(List_ptr list, int value)
+{
+  Node_ptr p_walk = list->head;
+  int position = 0;
+
+  while(p_walk != NULL)
+  {
+    if(p_walk->value == value)
+    {
+      return position;
+    }
+
+    position++;
+    p_walk = p_walk->next;
+  }
+
+  return -1;
+}

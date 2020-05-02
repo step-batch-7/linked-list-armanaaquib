@@ -10,6 +10,7 @@ typedef enum
   Remove_From_End='f',
   Remove_At='g',
   Clear_List='j',
+  Find_Position='k',
   Display_List='l',
   Exit='m'
 } Option;
@@ -20,6 +21,19 @@ int ask_value(void);
 Status perform_operaton(List_ptr, Option);
 void display_options(void);
 Option ask_option(void);
+void display_search_result(int, int);
+
+void display_search_result(int value, int position)
+{
+  if(position != -1)
+  {
+      printf("%d is present in the list at position %d\n", value, position);
+  }
+  else
+  {
+      printf("%d is not present in the list\n", value);
+  }
+}
 
 void clear_input_buffer(void)
 {
@@ -87,6 +101,13 @@ Status perform_operaton(List_ptr list, Option option)
       status = remove_at(list, position);
       break;
 
+    case Find_Position:
+      value = ask_value();
+      position = find_position(list, value);
+      display_search_result(value, position);
+      status = Success;
+      break;
+
     case Clear_List:
       status = clear_list(list);
       break;
@@ -114,6 +135,7 @@ void display_options(void)
   printf("(f) remove a number from the end of the list\n");
   printf("(g) remove a number from a given position in the list\n");
   printf("(j) clear the whole list\n");
+  printf("(k) check if a number exists in the list\n");
   printf("(l) display the list of numbers\n");
   printf("(m) exit\n");
 }

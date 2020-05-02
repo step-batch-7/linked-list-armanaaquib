@@ -38,6 +38,7 @@ Status remove_from_start(List_ptr);
 Status remove_from_end(List_ptr);
 Status remove_at(List_ptr, unsigned position);
 
+int find_position(List_ptr, int value);
 Status remove_first_occurrence(List_ptr, int value);
 Status remove_all_occurrences(List_ptr, int value);
 
