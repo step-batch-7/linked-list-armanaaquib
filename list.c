@@ -179,19 +179,16 @@ Status remove_from_end(List_ptr list)
   {
     return Failure;
   }
-  
+
+  if(list->head == list->last)
+  {
+    return remove_from_start(list);
+  }
+
   free(list->last);
   list->count--;
 
   Node_ptr second_last_node = list->head;
-
-  if(second_last_node == list->last)
-  {
-    list->head = NULL;
-    list->last = NULL;
-
-    return Success;
-  }
 
   while(second_last_node->next != list->last)
   {
