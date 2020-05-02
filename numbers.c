@@ -31,11 +31,11 @@ void display_search_result(int value, int position)
 {
   if(position != -1)
   {
-      printf("%d is present in the list at position %d\n", value, position);
+    printf("%d is present in the list at position %d\n", value, position);
   }
   else
   {
-      printf("%d is not present in the list\n", value);
+    printf("%d is not present in the list\n", value);
   }
 }
 

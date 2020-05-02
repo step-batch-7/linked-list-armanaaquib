@@ -76,15 +76,14 @@ Status add_to_end(List_ptr list, int value)
     return Failure;
   }
 
+  Ptr_to_node_ptr ptr_to_set = &list->last->next;
+
   if(list->head == NULL)
   {
-    list->head = node;
+    ptr_to_set = &list->head;
   }
-  else
-  {
-    list->last->next = node;
-  }
-  
+
+  DEREF ptr_to_set = node;
   list->last = node;
   list->count++;
 

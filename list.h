@@ -1,6 +1,8 @@
 #ifndef __LIST_H
 #define __LIST_H
 
+#define DEREF *
+
 typedef enum
 {
   Failure,
@@ -14,6 +16,7 @@ typedef struct node
 } Node;
 
 typedef Node *Node_ptr;
+typedef Node_ptr *Ptr_to_node_ptr;
 
 typedef struct
 {
