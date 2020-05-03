@@ -214,31 +214,35 @@ Status remove_at(List_ptr list, unsigned position)
   {
     return Failure;
   }
-  
+
   if(position == 0)
   {
     return remove_from_start(list);
   }
 
-  if(position == list->count - 1)
-  {
-    return remove_from_end(list);
-  }
+  Prev_Current_Pair pair;
+  pair.current = list->head;
+  pair.prev = NULL;
 
-  Node_ptr p_walk = list->head;
   unsigned pos = 0;
 
-  while(pos < position - 1)
+  while(pos < position)
   {
-    p_walk = p_walk->next;
+    pair.prev = pair.current;
+    pair.current = pair.current->next;
     pos++;
   }
 
-  Node_ptr node_to_remove = p_walk->next;
+  Ptr_to_node_ptr ptr_to_set = &list->head;
 
-  p_walk->next = node_to_remove->next;
-
-  free(node_to_remove);
+  if(pair.prev != NULL)
+  {
+    ptr_to_set = &pair.prev->next;
+  }
+  
+  DEREF ptr_to_set = pair.current->next;
+  free(pair.current);
+  list->count--;
 
   return Success;
 }
