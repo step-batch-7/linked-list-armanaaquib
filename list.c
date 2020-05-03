@@ -280,15 +280,13 @@ Status remove_first_occurrence(List_ptr list, int value)
 
 Status remove_all_occurrences(List_ptr list, int value)
 {
-  int position = find_position(list, value);
-
-  if(position == -1)
+  if(remove_first_occurrence(list, value) == Failure)
   {
     return Failure;
   }
 
   Node_ptr p_walk = list->head;
-  position = 0;
+  unsigned position = 0;
 
   while(p_walk != NULL)
   {
