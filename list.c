@@ -76,11 +76,11 @@ Status add_to_end(List_ptr list, int value)
     return Failure;
   }
 
-  Ptr_to_node_ptr ptr_to_set = &list->last->next;
+  Ptr_to_node_ptr ptr_to_set = &list->head;
 
-  if(list->head == NULL)
+  if(list->head != NULL)
   {
-    ptr_to_set = &list->head;
+    ptr_to_set = &list->last->next;
   }
 
   DEREF ptr_to_set = node;
@@ -182,23 +182,28 @@ Status remove_from_end(List_ptr list)
     return Failure;
   }
 
-  if(list->head == list->last)
+  Prev_Current_Pair pair;
+  pair.current = list->head;
+  pair.prev = NULL;
+
+  while(pair.current != list->last)
   {
-    return remove_from_start(list);
+    pair.prev = pair.current;
+    pair.current = pair.current->next;
   }
 
-  free(list->last);
+  Ptr_to_node_ptr ptr_to_set = &list->head;
+
+  if(pair.prev != NULL)
+  {
+    ptr_to_set = &pair.prev->next;
+  }
+  
+  free(pair.current);
+
+  DEREF ptr_to_set = NULL;
+  list->last = pair.prev;
   list->count--;
-
-  Node_ptr second_last_node = list->head;
-
-  while(second_last_node->next != list->last)
-  {
-    second_last_node = second_last_node->next;
-  }
-
-  second_last_node->next = NULL;
-  list->last = second_last_node;
 
   return Success;
 }
