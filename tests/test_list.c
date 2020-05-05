@@ -8,6 +8,7 @@ void test_add_to_start(void);
 void test_insert_at(void);
 void test_remove_from_start(void);
 void test_remove_from_end(void);
+void test_remove_at(void);
 
 void test_create_list(void)
 {
@@ -55,6 +56,7 @@ void test_insert_at(void)
   assert_status(insert_at(list,10, 0), Success, "should insert at 0 if list is empty");
   assert_status(insert_at(list,20, 1), Success, "should insert at end of the list");
   assert_status(insert_at(list,15, 1), Success, "should insert in middle of the list");
+  assert_status(insert_at(list,5, 0), Success, "should insert at 0 in the list");
 
   printf("\n");
 }
@@ -87,6 +89,22 @@ void test_remove_from_end(void)
   printf("\n");
 }
 
+void test_remove_at(void)
+{
+  printf("testing remove_at()\n");
+
+  Numbers numbers = {5, 10, 20, 30};
+  List_ptr list = create_list_with_values(numbers, 4);
+
+  assert_status(remove_at(list, 0), Success, "should remove at 0 from the list");
+  assert_status(remove_at(list, 1), Success, "should remove from middle of the list");
+  assert_status(remove_at(list, 1), Success, "should remove from end of the list");
+  assert_status(remove_at(list, 0), Success, "should remove at 0 of single value list");
+  assert_status(remove_at(list, 0), Failure, "should fail if position is more than length");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -95,6 +113,7 @@ int main(void)
   test_insert_at();
   test_remove_from_start();
   test_remove_from_end();
+  test_remove_at();
 
   return 0;
 }

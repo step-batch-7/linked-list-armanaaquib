@@ -48,6 +48,7 @@ List_ptr create_list_with_values(Numbers numbers, unsigned count)
 
     list->last->next = node;
     list->last = node;
+    list->count++;
   }
 
   return list;
