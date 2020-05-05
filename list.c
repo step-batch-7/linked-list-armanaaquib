@@ -4,7 +4,7 @@
 
 List_ptr create_list(void)
 {
-  List_ptr list = (List_ptr )malloc(sizeof(List));
+  List_ptr list = (List_ptr)malloc(sizeof(List));
 
   list->head = NULL;
   list->last = NULL;
