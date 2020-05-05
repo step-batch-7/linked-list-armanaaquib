@@ -5,6 +5,7 @@
 void test_create_list(void);
 void test_add_to_end(void);
 void test_add_to_start(void);
+void test_insert_at(void);
 
 void test_create_list(void)
 {
@@ -36,8 +37,22 @@ void test_add_to_start(void)
 
   List_ptr list = create_list();
 
-  assert_status(add_to_end(list,10), Success, "should add to start of empty list");
-  assert_status(add_to_end(list,20), Success, "should add to start of list");
+  assert_status(add_to_start(list,10), Success, "should add to start of empty list");
+  assert_status(add_to_start(list,20), Success, "should add to start of list");
+
+  printf("\n");
+}
+
+void test_insert_at(void)
+{
+  printf("testing insert_at()\n");
+
+  List_ptr list = create_list();
+
+  assert_status(insert_at(list,10, 1), Failure, "should fail if position is more than length");
+  assert_status(insert_at(list,10, 0), Success, "should insert at 0 if list is empty");
+  assert_status(insert_at(list,20, 1), Success, "should insert at end of the list");
+  assert_status(insert_at(list,15, 1), Success, "should insert in middle of the list");
 
   printf("\n");
 }
@@ -47,6 +62,7 @@ int main(void)
   test_create_list();
   test_add_to_end();
   test_add_to_start();
+  test_insert_at();
 
   return 0;
 }
