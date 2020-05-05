@@ -12,6 +12,7 @@ void test_remove_at(void);
 void test_find_position(void);
 void test_remove_first_occurrence(void);
 void test_remove_all_occurrences(void);
+void test_add_unique(void);
 
 void test_create_list(void)
 {
@@ -151,6 +152,19 @@ void test_remove_all_occurrences(void)
   printf("\n");
 }
 
+void test_add_unique(void)
+{
+  printf("testing add_unique()\n");
+
+  Numbers numbers = {5, 10};
+  List_ptr list = create_list_with_values(numbers, 2);
+
+  assert_status(add_unique(list, 10), Failure, "should not add if value is already present");
+  assert_status(add_unique(list, 20), Success, "should add if value is not present in the list");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -163,6 +177,7 @@ int main(void)
   test_find_position();
   test_remove_first_occurrence();
   test_remove_all_occurrences();
+  test_add_unique();
 
   return 0;
 }
