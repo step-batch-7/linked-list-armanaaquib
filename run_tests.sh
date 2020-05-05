@@ -1,8 +1,8 @@
 #! /bin/bash
 
-cp list.* test_list
+cp list.* tests
 
-cd test_list
+cd tests
 
 rm -f *.o
 
@@ -10,14 +10,14 @@ gcc -c *.c
 
 if [ $? == 0 ]
 then
-  gcc -o test_list *.o
+  gcc -o tests *.o
 
   if [ $? == 0 ]
   then
     rm -f *.o
     rm list.*
 
-    ./test_list
+    ./tests
   else
     echo "Linking Failed."
   fi
