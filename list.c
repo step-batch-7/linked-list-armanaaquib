@@ -310,7 +310,7 @@ Status add_unique(List_ptr list, int value)
 {
   if(find_position(list, value) != -1)
   {
-    return Success;
+    return Failure;
   }
 
   Node_ptr node = create_node(value);
