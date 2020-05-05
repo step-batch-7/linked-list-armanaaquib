@@ -29,3 +29,26 @@ void assert_status(Status status_1, Status status_2, char mesaage[])
 {
   display_assert_message(status_1 == status_2, mesaage);
 }
+
+
+List_ptr create_list_with_values(Numbers numbers, unsigned count)
+{
+  List_ptr list = create_list();
+  Node_ptr node;
+  
+  node = create_node(numbers[0]);
+
+  list->head = node;
+  list->last = node;
+  list->count++;
+
+  for(unsigned i = 1; i < count; i++)
+  {
+    node = create_node(numbers[i]);
+
+    list->last->next = node;
+    list->last = node;
+  }
+
+  return list;
+}
