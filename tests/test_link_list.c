@@ -24,3 +24,8 @@ void assert_int(int value_1, int value_2, char mesaage[])
 {
   display_assert_message(value_1 == value_2, mesaage);
 }
+
+void assert_status(Status status_1, Status status_2, char mesaage[])
+{
+  display_assert_message(status_1 == status_2, mesaage);
+}

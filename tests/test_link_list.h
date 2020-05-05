@@ -8,5 +8,6 @@ typedef char Message[];
 void display_assert_message(Status, Message);
 void assert_node_ptr(Node_ptr, Node_ptr, Message);
 void assert_int(int, int, Message);
+void assert_status(Status, Status, Message);
 
 #endif
