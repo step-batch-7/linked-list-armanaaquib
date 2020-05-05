@@ -13,6 +13,7 @@ void test_find_position(void);
 void test_remove_first_occurrence(void);
 void test_remove_all_occurrences(void);
 void test_add_unique(void);
+void test_clear_list(void);
 
 void test_create_list(void)
 {
@@ -165,6 +166,21 @@ void test_add_unique(void)
   printf("\n");
 }
 
+void test_clear_list(void)
+{
+  printf("testing clear_list()\n");
+
+  Numbers numbers = {5, 10, 15};
+  List_ptr list = create_list_with_values(numbers, 3);
+
+  assert_status(clear_list(list), Success, "should clear list");
+  assert_node_ptr(list->head, NULL, "head NULL");
+  assert_node_ptr(list->head, NULL, "last NULL");
+  assert_int(list->count, 0, "count 0");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -178,6 +194,7 @@ int main(void)
   test_remove_first_occurrence();
   test_remove_all_occurrences();
   test_add_unique();
+  test_clear_list();
 
   return 0;
 }
