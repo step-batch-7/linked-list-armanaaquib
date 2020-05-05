@@ -56,7 +56,7 @@ void destroy_list(List_ptr list)
 
 Node_ptr create_node(int value)
 {
-  Node_ptr node = (Node_ptr )malloc(sizeof(Node));
+  Node_ptr node = (Node_ptr)malloc(sizeof(Node));
 
   if(node)
   {
@@ -215,11 +215,6 @@ Status remove_at(List_ptr list, unsigned position)
     return Failure;
   }
 
-  if(position == 0)
-  {
-    return remove_from_start(list);
-  }
-
   Prev_Current_Pair pair;
   pair.current = list->head;
   pair.prev = NULL;
@@ -241,8 +236,14 @@ Status remove_at(List_ptr list, unsigned position)
   }
   
   DEREF ptr_to_set = pair.current->next;
-  free(pair.current);
   list->count--;
+
+  if(pair.current == list->last)
+  {
+    list->last = pair.prev;
+  }
+
+  free(pair.current);
 
   return Success;
 }
