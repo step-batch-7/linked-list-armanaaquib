@@ -11,6 +11,7 @@ void test_remove_from_end(void);
 void test_remove_at(void);
 void test_find_position(void);
 void test_remove_first_occurrence(void);
+void test_remove_all_occurrences(void);
 
 void test_create_list(void)
 {
@@ -135,6 +136,21 @@ void test_remove_first_occurrence(void)
   printf("\n");
 }
 
+void test_remove_all_occurrences(void)
+{
+  printf("testing remove_all_occurrences()\n");
+
+  Numbers numbers = {5, 10, 5, 10};
+  List_ptr list = create_list_with_values(numbers, 4);
+
+  assert_status(remove_all_occurrences(list, 10), Success, "should remove all occurrances");
+  assert_status(find_position(list, 10), -1, "all occurrences removed");
+
+  assert_status(remove_all_occurrences(list, 20), Failure, "should fail if value is not present in the list");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -146,6 +162,7 @@ int main(void)
   test_remove_at();
   test_find_position();
   test_remove_first_occurrence();
+  test_remove_all_occurrences();
 
   return 0;
 }
