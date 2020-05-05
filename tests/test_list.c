@@ -9,6 +9,7 @@ void test_insert_at(void);
 void test_remove_from_start(void);
 void test_remove_from_end(void);
 void test_remove_at(void);
+void test_find_position(void);
 
 void test_create_list(void)
 {
@@ -105,6 +106,19 @@ void test_remove_at(void)
   printf("\n");
 }
 
+void test_find_position(void)
+{
+  printf("testing find_position()\n");
+
+  Numbers numbers = {5, 10, 5, 10};
+  List_ptr list = create_list_with_values(numbers, 4);
+
+  assert_int(find_position(list, 10), 1, "should give position of first occurrance");
+  assert_int(find_position(list, 20), -1, "should give -1 if value is not present in the list");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -114,6 +128,7 @@ int main(void)
   test_remove_from_start();
   test_remove_from_end();
   test_remove_at();
+  test_find_position();
 
   return 0;
 }
