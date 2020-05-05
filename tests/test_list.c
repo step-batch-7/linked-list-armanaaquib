@@ -10,6 +10,7 @@ void test_remove_from_start(void);
 void test_remove_from_end(void);
 void test_remove_at(void);
 void test_find_position(void);
+void test_remove_first_occurrence(void);
 
 void test_create_list(void)
 {
@@ -119,6 +120,21 @@ void test_find_position(void)
   printf("\n");
 }
 
+void test_remove_first_occurrence(void)
+{
+  printf("testing remove_first_occurrence()\n");
+
+  Numbers numbers = {5, 10, 5, 10};
+  List_ptr list = create_list_with_values(numbers, 4);
+
+  assert_status(remove_first_occurrence(list, 10), Success, "should remove first occurrance");
+  assert_status(find_position(list, 10), 2, "valid first occurrence after removing");
+
+  assert_status(remove_first_occurrence(list, 20), Failure, "should fail if value is not present in the list");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -129,6 +145,7 @@ int main(void)
   test_remove_from_end();
   test_remove_at();
   test_find_position();
+  test_remove_first_occurrence();
 
   return 0;
 }
