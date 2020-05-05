@@ -7,6 +7,7 @@ void test_add_to_end(void);
 void test_add_to_start(void);
 void test_insert_at(void);
 void test_remove_from_start(void);
+void test_remove_from_end(void);
 
 void test_create_list(void)
 {
@@ -72,6 +73,20 @@ void test_remove_from_start(void)
   printf("\n");
 }
 
+void test_remove_from_end(void)
+{
+  printf("testing remove_from_end()\n");
+
+  Numbers numbers = {10, 20};
+  List_ptr list = create_list_with_values(numbers, 2);
+
+  assert_status(remove_from_end(list), Success, "should remove from end of the list");
+  assert_status(remove_from_end(list), Success, "should remove from end of single value list");
+  assert_status(remove_from_end(list), Failure, "should fail if list is empty");
+
+  printf("\n");
+}
+
 int main(void)
 {
   test_create_list();
@@ -79,6 +94,7 @@ int main(void)
   test_add_to_start();
   test_insert_at();
   test_remove_from_start();
+  test_remove_from_end();
 
   return 0;
 }
