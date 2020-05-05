@@ -24,6 +24,8 @@ void test_create_list(void)
   assert_node_ptr(list->head, NULL, "last NULL");
   assert_int(list->count, 0, "count 0");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -36,6 +38,8 @@ void test_add_to_end(void)
   assert_status(add_to_end(list,10), Success, "should add to end of empty list");
   assert_status(add_to_end(list,20), Success, "should add to end of list");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -47,6 +51,8 @@ void test_add_to_start(void)
 
   assert_status(add_to_start(list,10), Success, "should add to start of empty list");
   assert_status(add_to_start(list,20), Success, "should add to start of list");
+
+  destroy_list(list);
 
   printf("\n");
 }
@@ -63,6 +69,8 @@ void test_insert_at(void)
   assert_status(insert_at(list,15, 1), Success, "should insert in middle of the list");
   assert_status(insert_at(list,5, 0), Success, "should insert at 0 in the list");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -77,6 +85,8 @@ void test_remove_from_start(void)
   assert_status(remove_from_start(list), Success, "should remove from start of single value list");
   assert_status(remove_from_start(list), Failure, "should fail if list is empty");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -90,6 +100,8 @@ void test_remove_from_end(void)
   assert_status(remove_from_end(list), Success, "should remove from end of the list");
   assert_status(remove_from_end(list), Success, "should remove from end of single value list");
   assert_status(remove_from_end(list), Failure, "should fail if list is empty");
+
+  destroy_list(list);
 
   printf("\n");
 }
@@ -107,6 +119,8 @@ void test_remove_at(void)
   assert_status(remove_at(list, 0), Success, "should remove at 0 of single value list");
   assert_status(remove_at(list, 0), Failure, "should fail if position is more than length");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -119,6 +133,8 @@ void test_find_position(void)
 
   assert_int(find_position(list, 10), 1, "should give position of first occurrance");
   assert_int(find_position(list, 20), -1, "should give -1 if value is not present in the list");
+
+  destroy_list(list);
 
   printf("\n");
 }
@@ -135,6 +151,8 @@ void test_remove_first_occurrence(void)
 
   assert_status(remove_first_occurrence(list, 20), Failure, "should fail if value is not present in the list");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -150,6 +168,8 @@ void test_remove_all_occurrences(void)
 
   assert_status(remove_all_occurrences(list, 20), Failure, "should fail if value is not present in the list");
 
+  destroy_list(list);
+
   printf("\n");
 }
 
@@ -162,6 +182,8 @@ void test_add_unique(void)
 
   assert_status(add_unique(list, 10), Failure, "should not add if value is already present");
   assert_status(add_unique(list, 20), Success, "should add if value is not present in the list");
+
+  destroy_list(list);
 
   printf("\n");
 }
@@ -177,6 +199,8 @@ void test_clear_list(void)
   assert_node_ptr(list->head, NULL, "head NULL");
   assert_node_ptr(list->head, NULL, "last NULL");
   assert_int(list->count, 0, "count 0");
+
+  destroy_list(list);
 
   printf("\n");
 }
