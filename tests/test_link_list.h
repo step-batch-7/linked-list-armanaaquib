@@ -13,4 +13,6 @@ void assert_status(Status, Status, Message);
 
 List_ptr create_list_with_values(Numbers, unsigned);
 
+void print_tests_status(void);
+
 #endif

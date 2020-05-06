@@ -1,14 +1,24 @@
 #include <stdio.h>
 #include "test_link_list.h"
 
+unsigned NO_OF_PASSING_TESTS = 0;
+unsigned NO_OF_FAILING_TESTS = 0;
+
+void print_tests_status(void)
+{
+  printf("Passing %u, Failing %u\n", NO_OF_PASSING_TESTS, NO_OF_FAILING_TESTS);
+}
+
 void display_assert_message(Status status, char message[])
 {
   if(status == Success)
   {
+    NO_OF_PASSING_TESTS++;
     printf("%s", "- ");
   }
   else
   {
+    NO_OF_FAILING_TESTS++;
     printf("%s", "X ");
   }
 

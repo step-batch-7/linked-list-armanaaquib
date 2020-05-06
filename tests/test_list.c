@@ -318,5 +318,7 @@ int main(void)
   test_add_unique();
   test_clear_list();
 
+  print_tests_status();
+
   return 0;
 }
