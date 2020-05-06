@@ -138,18 +138,21 @@ Status insert_at(List_ptr list, int value, unsigned position)
     pos++;
   }
 
-  if(pair.prev == NULL)
+  Ptr_to_node_ptr ptr_to_set = &list->head;
+
+  if(pair.prev != NULL)
   {
-    list->head = node;
-    list->last = node;
-  }
-  else
-  {
-    pair.prev->next = node;  
+    ptr_to_set = &pair.prev->next;
   }
 
+  DEREF ptr_to_set = node;
   node->next = pair.current;
   list->count++;
+
+  if(pair.current == NULL)
+  {
+    list->last = node;
+  }
 
   return Success;
 }

@@ -49,7 +49,16 @@ void test_add_to_end(void)
   List_ptr list = create_list();
 
   assert_status(add_to_end(list,10), Success, "should add to end of empty list");
+  assert_node_ptr(list->head, &(DEREF list->head), "  head should point first node");
+  assert_node_ptr(list->last, &(DEREF list->head), "  last should point first node");
+  assert_int(list->count, 1, "  count should be 1");
+
+  Node_ptr head = list->head;
+
   assert_status(add_to_end(list,20), Success, "should add to end of list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should point first node");
+  assert_node_ptr(list->last, &(DEREF head->next), "  last should point second node");
+  assert_int(list->count, 2, "  count should increase by 1");
 
   destroy_list(list);
 
@@ -63,7 +72,16 @@ void test_add_to_start(void)
   List_ptr list = create_list();
 
   assert_status(add_to_start(list,10), Success, "should add to start of empty list");
+  assert_node_ptr(list->head, &(DEREF list->head), "  head should point first node");
+  assert_node_ptr(list->last, &(DEREF list->head), "  last should point first node");
+  assert_int(list->count, 1, "  count should be 1");
+
+  Node_ptr head = list->head;
+
   assert_status(add_to_start(list,20), Success, "should add to start of list");
+  assert_node_ptr(list->head->next, &(DEREF head), "  head should point new first node");
+  assert_node_ptr(list->last, &(DEREF head), "  last should not change");
+  assert_int(list->count, 2, "  count should increase by 1");
 
   destroy_list(list);
 
@@ -77,10 +95,30 @@ void test_insert_at(void)
   List_ptr list = create_list();
 
   assert_status(insert_at(list,10, 1), Failure, "should fail if position is more than length");
+
   assert_status(insert_at(list,10, 0), Success, "should insert at 0 if list is empty");
+  assert_node_ptr(list->head, &(DEREF list->head), "  head should point first node");
+  assert_node_ptr(list->last, &(DEREF list->head), "  last should point first node");
+  assert_int(list->count, 1, "  count should be 1");
+
+  Node_ptr head = list->head;
+
   assert_status(insert_at(list,20, 1), Success, "should insert at end of the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
+  assert_node_ptr(list->last, &(DEREF head->next), "  last should point second node");
+  assert_int(list->count, 2, "  count should increase by 1");
+
+  Node_ptr last = list->last;
+
   assert_status(insert_at(list,15, 1), Success, "should insert in middle of the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
+  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
+  assert_int(list->count, 3, "  count should increase by 1");
+
   assert_status(insert_at(list,5, 0), Success, "should insert at 0 in the list");
+  assert_node_ptr(list->head->next, &(DEREF head), "  head should point new first node");
+  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
+  assert_int(list->count, 4, "  count should increase by 1");
 
   destroy_list(list);
 
