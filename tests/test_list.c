@@ -21,9 +21,9 @@ void test_create_list(void)
   printf("testing create_list()\n");
 
   List_ptr list = create_list();
-  assert_node_ptr(list->head, NULL, "head NULL");
-  assert_node_ptr(list->head, NULL, "last NULL");
-  assert_int(list->count, 0, "count 0");
+  assert_node_ptr(list->head, NULL, "head should be NULL");
+  assert_node_ptr(list->head, NULL, "last should be NULL");
+  assert_int(list->count, 0, "count should be 0");
 
   destroy_list(list);
 
@@ -131,9 +131,20 @@ void test_remove_from_start(void)
 
   Numbers numbers = {10, 20};
   List_ptr list = create_list_with_values(numbers, 2);
+  
+  Node_ptr head = list->head->next;
+  Node_ptr last = list->last;
 
   assert_status(remove_from_start(list), Success, "should remove from start of the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should point the second node");
+  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
+  assert_int(list->count, 1, "  count should decrease by 1");
+
   assert_status(remove_from_start(list), Success, "should remove from start of single value list");
+  assert_node_ptr(list->head, NULL, "  head should be NULL");
+  assert_node_ptr(list->last, NULL, "  last should be NULL");
+  assert_int(list->count, 0, "  count should be 0");
+
   assert_status(remove_from_start(list), Failure, "should fail if list is empty");
 
   destroy_list(list);
@@ -148,8 +159,19 @@ void test_remove_from_end(void)
   Numbers numbers = {10, 20};
   List_ptr list = create_list_with_values(numbers, 2);
 
+  Node_ptr head = list->head;
+  Node_ptr last = list->head;
+
   assert_status(remove_from_end(list), Success, "should remove from end of the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
+  assert_node_ptr(list->last, &(DEREF last), "  last should point first node");
+  assert_int(list->count, 1, "  count should decrease by 1");
+
   assert_status(remove_from_end(list), Success, "should remove from end of single value list");
+  assert_node_ptr(list->head, NULL, "  head should be NULL");
+  assert_node_ptr(list->last, NULL, "  last should be NULL");
+  assert_int(list->count, 0, "  count should be 0");
+
   assert_status(remove_from_end(list), Failure, "should fail if list is empty");
 
   destroy_list(list);
@@ -164,10 +186,31 @@ void test_remove_at(void)
   Numbers numbers = {5, 10, 20, 30};
   List_ptr list = create_list_with_values(numbers, 4);
 
+  Node_ptr head = list->head->next;
+  Node_ptr last = list->last;
+
   assert_status(remove_at(list, 0), Success, "should remove at 0 from the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should point second node");
+  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
+  assert_int(list->count, 3, "  count should decrease by 1");
+
   assert_status(remove_at(list, 1), Success, "should remove from middle of the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
+  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
+  assert_int(list->count, 2, "  count should decrease by 1");
+
+  last = head;
+
   assert_status(remove_at(list, 1), Success, "should remove from end of the list");
+  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
+  assert_node_ptr(list->last, &(DEREF last), "  last should point to second last node");
+  assert_int(list->count, 1, "  count should decrease by 1");
+
   assert_status(remove_at(list, 0), Success, "should remove at 0 of single value list");
+  assert_node_ptr(list->head, NULL, "  head should be NULL");
+  assert_node_ptr(list->last, NULL, "  last should be NULL");
+  assert_int(list->count, 0, "  count should be 0");
+
   assert_status(remove_at(list, 0), Failure, "should fail if position is more than length");
 
   destroy_list(list);
@@ -198,7 +241,8 @@ void test_remove_first_occurrence(void)
   List_ptr list = create_list_with_values(numbers, 4);
 
   assert_status(remove_first_occurrence(list, 10), Success, "should remove first occurrance");
-  assert_status(find_position(list, 10), 2, "valid first occurrence after removing");
+  assert_int(list->count, 3, "  count should decrase by 1");
+  assert_status(find_position(list, 10), 2, "  valid first occurrence after removing");
 
   assert_status(remove_first_occurrence(list, 20), Failure, "should fail if value is not present in the list");
 
@@ -215,7 +259,8 @@ void test_remove_all_occurrences(void)
   List_ptr list = create_list_with_values(numbers, 4);
 
   assert_status(remove_all_occurrences(list, 10), Success, "should remove all occurrances");
-  assert_status(find_position(list, 10), -1, "all occurrences removed");
+  assert_int(list->count, 2, " count should decrease by no values present in the list");
+  assert_status(find_position(list, 10), -1, " all occurrences removed");
 
   assert_status(remove_all_occurrences(list, 20), Failure, "should fail if value is not present in the list");
 
@@ -247,9 +292,9 @@ void test_clear_list(void)
   List_ptr list = create_list_with_values(numbers, 3);
 
   assert_status(clear_list(list), Success, "should clear list");
-  assert_node_ptr(list->head, NULL, "head NULL");
-  assert_node_ptr(list->head, NULL, "last NULL");
-  assert_int(list->count, 0, "count 0");
+  assert_node_ptr(list->head, NULL, "  head should be NULL");
+  assert_node_ptr(list->head, NULL, "  last should be NULL");
+  assert_int(list->count, 0, "  count should be 0");
 
   destroy_list(list);
 
