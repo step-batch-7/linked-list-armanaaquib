@@ -3,6 +3,7 @@
 #include "list.h"
 
 void test_create_list(void);
+void test_create_node(void);
 void test_add_to_end(void);
 void test_add_to_start(void);
 void test_insert_at(void);
@@ -25,6 +26,18 @@ void test_create_list(void)
   assert_int(list->count, 0, "count 0");
 
   destroy_list(list);
+
+  printf("\n");
+}
+
+void test_create_node(void)
+{
+  printf("testing create_node()\n");
+
+  Node_ptr node = create_node(10);
+
+  assert_int(node->value, 10, "value should be passed value");
+  assert_node_ptr(node->next, NULL, "next should be null");
 
   printf("\n");
 }
@@ -208,6 +221,7 @@ void test_clear_list(void)
 int main(void)
 {
   test_create_list();
+  test_create_node();
   test_add_to_end();
   test_add_to_start();
   test_insert_at();
