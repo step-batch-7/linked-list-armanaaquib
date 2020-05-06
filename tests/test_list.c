@@ -56,7 +56,7 @@ void test_add_to_end(void)
   Node_ptr head = list->head;
 
   assert_status(add_to_end(list,20), Success, "should add to end of list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should point first node");
+  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
   assert_node_ptr(list->last, &(DEREF head->next), "  last should point second node");
   assert_int(list->count, 2, "  count should increase by 1");
 
@@ -77,10 +77,11 @@ void test_add_to_start(void)
   assert_int(list->count, 1, "  count should be 1");
 
   Node_ptr head = list->head;
+  Node_ptr last = list->head;
 
   assert_status(add_to_start(list,20), Success, "should add to start of list");
   assert_node_ptr(list->head->next, &(DEREF head), "  head should point new first node");
-  assert_node_ptr(list->last, &(DEREF head), "  last should not change");
+  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
   assert_int(list->count, 2, "  count should increase by 1");
 
   destroy_list(list);
@@ -105,7 +106,7 @@ void test_insert_at(void)
 
   assert_status(insert_at(list,20, 1), Success, "should insert at end of the list");
   assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF head->next), "  last should point second node");
+  assert_node_ptr(list->last, &(DEREF head->next), "  last should point end node of the list");
   assert_int(list->count, 2, "  count should increase by 1");
 
   Node_ptr last = list->last;
@@ -259,7 +260,7 @@ void test_remove_all_occurrences(void)
   List_ptr list = create_list_with_values(numbers, 4);
 
   assert_status(remove_all_occurrences(list, 10), Success, "should remove all occurrances");
-  assert_int(list->count, 2, " count should decrease by no values present in the list");
+  assert_int(list->count, 2, " count should decrease by no of values present in the list");
   assert_status(find_position(list, 10), -1, " all occurrences removed");
 
   assert_status(remove_all_occurrences(list, 20), Failure, "should fail if value is not present in the list");
