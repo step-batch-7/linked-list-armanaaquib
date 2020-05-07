@@ -49,16 +49,20 @@ void test_add_to_end(void)
   List_ptr list = create_list();
 
   assert_status(add_to_end(list,10), Success, "should add to end of empty list");
-  assert_node_ptr(list->head, &(DEREF list->head), "  head should point first node");
-  assert_node_ptr(list->last, &(DEREF list->head), "  last should point first node");
-  assert_int(list->count, 1, "  count should be 1");
+  Messages messages = {
+    "~ head should point first node",
+    "~ last should point first node",
+    "~ count should be 1",
+  };
+  assert_list(list, &(DEREF list->head), &(DEREF list->head), 1, messages);
 
   Node_ptr head = list->head;
 
   assert_status(add_to_end(list,20), Success, "should add to end of list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF head->next), "  last should point second node");
-  assert_int(list->count, 2, "  count should increase by 1");
+  messages[0] = "~ head should not changes";
+  messages[1] = "~ last should point second node";
+  messages[2] = "~ count should increase by 1";
+  assert_list(list, &(DEREF head), &(DEREF head->next), 2, messages);
 
   destroy_list(list);
 
@@ -72,17 +76,20 @@ void test_add_to_start(void)
   List_ptr list = create_list();
 
   assert_status(add_to_start(list,10), Success, "should add to start of empty list");
-  assert_node_ptr(list->head, &(DEREF list->head), "  head should point first node");
-  assert_node_ptr(list->last, &(DEREF list->head), "  last should point first node");
-  assert_int(list->count, 1, "  count should be 1");
+  Messages messages = {
+    "~ head should point first node",
+    "~ last should point first node",
+    "~ count should be 1",
+  };
+  assert_list(list, &(DEREF list->head), &(DEREF list->head), 1, messages);
 
-  Node_ptr head = list->head;
   Node_ptr last = list->head;
 
   assert_status(add_to_start(list,20), Success, "should add to start of list");
-  assert_node_ptr(list->head->next, &(DEREF head), "  head should point new first node");
-  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
-  assert_int(list->count, 2, "  count should increase by 1");
+  messages[0] = "~ head should point new first node";
+  messages[1] = "~ last should not change";
+  messages[2] = "~ count should increase by 1";
+  assert_list(list, &(DEREF list->head), &(DEREF last), 2, messages);
 
   destroy_list(list);
 
@@ -98,28 +105,34 @@ void test_insert_at(void)
   assert_status(insert_at(list,10, 1), Failure, "should fail if position is more than length");
 
   assert_status(insert_at(list,10, 0), Success, "should insert at 0 if list is empty");
-  assert_node_ptr(list->head, &(DEREF list->head), "  head should point first node");
-  assert_node_ptr(list->last, &(DEREF list->head), "  last should point first node");
-  assert_int(list->count, 1, "  count should be 1");
+  Messages messages = {
+    "~ head should point first node",
+    "~ last should point first node",
+    "~ count should be 1",
+  };
+  assert_list(list, &(DEREF list->head), &(DEREF list->head), 1, messages);
 
   Node_ptr head = list->head;
 
   assert_status(insert_at(list,20, 1), Success, "should insert at end of the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF head->next), "  last should point end node of the list");
-  assert_int(list->count, 2, "  count should increase by 1");
+  messages[0] = "~ head should not change";
+  messages[1] = "~ last should point end node of the list";
+  messages[2] = "~ count should increase by 1";
+  assert_list(list, &(DEREF head), &(DEREF head->next), 2, messages);
 
   Node_ptr last = list->last;
 
   assert_status(insert_at(list,15, 1), Success, "should insert in middle of the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
-  assert_int(list->count, 3, "  count should increase by 1");
+  messages[0] = "~ head should not change";
+  messages[1] = "~ last should not change";
+  messages[2] = "~ count should increase by 1";
+  assert_list(list, &(DEREF head), &(DEREF last), 3, messages);
 
   assert_status(insert_at(list,5, 0), Success, "should insert at 0 in the list");
-  assert_node_ptr(list->head->next, &(DEREF head), "  head should point new first node");
-  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
-  assert_int(list->count, 4, "  count should increase by 1");
+  messages[0] = "~ head should point new first node";
+  messages[1] = "~ last should not change";
+  messages[2] = "~ count should increase by 1";
+  assert_list(list, &(DEREF list->head), &(DEREF last), 4, messages);
 
   destroy_list(list);
 
@@ -137,14 +150,18 @@ void test_remove_from_start(void)
   Node_ptr last = list->last;
 
   assert_status(remove_from_start(list), Success, "should remove from start of the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should point the second node");
-  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
-  assert_int(list->count, 1, "  count should decrease by 1");
+  Messages messages = {
+    "~ head should point second node",
+    "~ last should not change",
+    "~ count should decrease by 1",
+  };
+  assert_list(list, &(DEREF head), &(DEREF last), 1, messages);
 
   assert_status(remove_from_start(list), Success, "should remove from start of single value list");
-  assert_node_ptr(list->head, NULL, "  head should be NULL");
-  assert_node_ptr(list->last, NULL, "  last should be NULL");
-  assert_int(list->count, 0, "  count should be 0");
+  messages[0] = "~ head should be NULL";
+  messages[1] = "~ last should be NULL";
+  messages[2] = "~ count should be 0";
+  assert_list(list, NULL, NULL, 0, messages);
 
   assert_status(remove_from_start(list), Failure, "should fail if list is empty");
 
@@ -164,14 +181,18 @@ void test_remove_from_end(void)
   Node_ptr last = list->head;
 
   assert_status(remove_from_end(list), Success, "should remove from end of the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF last), "  last should point first node");
-  assert_int(list->count, 1, "  count should decrease by 1");
+  Messages messages = {
+    "~ head should not change",
+    "~ last should point second last node",
+    "~ count should decrease by 1",
+  };
+  assert_list(list, &(DEREF head), &(DEREF last), 1, messages);
 
   assert_status(remove_from_end(list), Success, "should remove from end of single value list");
-  assert_node_ptr(list->head, NULL, "  head should be NULL");
-  assert_node_ptr(list->last, NULL, "  last should be NULL");
-  assert_int(list->count, 0, "  count should be 0");
+  messages[0] = "~ head should be NULL";
+  messages[1] = "~ last should be NULL";
+  messages[2] = "~ count should be 0";
+  assert_list(list, NULL, NULL, 0, messages);
 
   assert_status(remove_from_end(list), Failure, "should fail if list is empty");
 
@@ -191,26 +212,32 @@ void test_remove_at(void)
   Node_ptr last = list->last;
 
   assert_status(remove_at(list, 0), Success, "should remove at 0 from the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should point second node");
-  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
-  assert_int(list->count, 3, "  count should decrease by 1");
+  Messages messages = {
+    "~ head should point second node",
+    "~ last should not change",
+    "~ count should decrease by 1",
+  };
+  assert_list(list, &(DEREF head), &(DEREF last), 3, messages);
 
   assert_status(remove_at(list, 1), Success, "should remove from middle of the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF last), "  last should not change");
-  assert_int(list->count, 2, "  count should decrease by 1");
+  messages[0] = "~ head should not change";
+  messages[1] = "~ last should not change";
+  messages[2] = "~ count should decrease by 1";
+  assert_list(list, &(DEREF head), &(DEREF last), 2, messages);
 
   last = head;
 
   assert_status(remove_at(list, 1), Success, "should remove from end of the list");
-  assert_node_ptr(list->head, &(DEREF head), "  head should not change");
-  assert_node_ptr(list->last, &(DEREF last), "  last should point to second last node");
-  assert_int(list->count, 1, "  count should decrease by 1");
+  messages[0] = "~ head should not change";
+  messages[1] = "~ last should point to second last node";
+  messages[2] = "~ count should decrease by 1";
+  assert_list(list, &(DEREF head), &(DEREF last), 1, messages);
 
   assert_status(remove_at(list, 0), Success, "should remove at 0 of single value list");
-  assert_node_ptr(list->head, NULL, "  head should be NULL");
-  assert_node_ptr(list->last, NULL, "  last should be NULL");
-  assert_int(list->count, 0, "  count should be 0");
+  messages[0] = "~ head should be NULL";
+  messages[1] = "~ last should be NULL";
+  messages[2] = "~ count should be 0";
+  assert_list(list, NULL, NULL, 0, messages);
 
   assert_status(remove_at(list, 0), Failure, "should fail if position is more than length");
 
@@ -293,9 +320,12 @@ void test_clear_list(void)
   List_ptr list = create_list_with_values(numbers, 3);
 
   assert_status(clear_list(list), Success, "should clear list");
-  assert_node_ptr(list->head, NULL, "  head should be NULL");
-  assert_node_ptr(list->head, NULL, "  last should be NULL");
-  assert_int(list->count, 0, "  count should be 0");
+  Messages messages = {
+    "~ head should be NULL",
+    "~ last should be NULL",
+    "~ count should be 0",
+  };
+  assert_list(list, NULL, NULL, 0, messages);
 
   destroy_list(list);
 

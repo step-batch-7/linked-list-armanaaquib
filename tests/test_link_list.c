@@ -40,6 +40,12 @@ void assert_status(Status status_1, Status status_2, char mesaage[])
   display_assert_message(status_1 == status_2, mesaage);
 }
 
+void assert_list(List_ptr list, Node_ptr head, Node_ptr last, int count, Messages messages)
+{
+  assert_node_ptr(list->head, head, messages[0]);
+  assert_node_ptr(list->last, last, messages[1]);
+  assert_int(list->count, count, messages[2]);
+}
 
 List_ptr create_list_with_values(Numbers numbers, unsigned count)
 {

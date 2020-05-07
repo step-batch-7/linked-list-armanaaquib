@@ -4,12 +4,14 @@
 #include "list.h"
 
 typedef char *Message;
+typedef Message Messages[];
 typedef int Numbers[];
 
 void display_assert_message(Status, Message);
 void assert_node_ptr(Node_ptr, Node_ptr, Message);
 void assert_int(int, int, Message);
 void assert_status(Status, Status, Message);
+void assert_list(List_ptr, Node_ptr, Node_ptr, int, Messages);
 
 List_ptr create_list_with_values(Numbers, unsigned);
 
