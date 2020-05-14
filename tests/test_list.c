@@ -59,7 +59,7 @@ void test_add_to_end(void)
   Node_ptr head = list->head;
 
   assert_status(add_to_end(list,20), Success, "should add to end of list");
-  messages[0] = "~ head should not changes";
+  messages[0] = "~ head should not change";
   messages[1] = "~ last should point second node";
   messages[2] = "~ count should increase by 1";
   assert_list(list, &(DEREF head), &(DEREF head->next), 2, messages);

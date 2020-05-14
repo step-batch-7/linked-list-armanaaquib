@@ -316,12 +316,5 @@ Status add_unique(List_ptr list, int value)
     return Failure;
   }
 
-  Node_ptr node = create_node(value);
-
-  if(!node)
-  {
-    return Failure;
-  }
-
   return add_to_end(list, value);
 }
